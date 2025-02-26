@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategy Planner</title>
+</head>
+<body>
+    <h2>Strategy Planner</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit Strategy</button>
+    </form>
+
+    <h3>Strategies</h3>
+    {% for strategy in strategies %}
+        {% if not strategy.hidden %}
+            <div>
+                <h4>{{ strategy.title }}</h4>
+                <p>{{ strategy.description }}</p>
+                <button onclick="window.location.href='{% url 'vote_strategy' strategy.id 'up' %}'">Upvote</button>
+                <button onclick="window.location.href='{% url 'vote_strategy' strategy.id 'down' %}'">Downvote</button>
+                <p>Upvotes: {{ strategy.upvotes }} | Downvotes: {{ strategy.downvotes }}</p>
+            </div>
+        {% else %}
+            <div style="color: gray;">
+                <h4>{{ strategy.title }} (Hidden)</h4>
+                <p>{{ strategy.description }}</p>
+            </div>
+        {% endif %}
+    {% endfor %}
+    
+    <a href="{% url 'team_builder' %}">Go to Team Builder</a>
+</body>
+</html>

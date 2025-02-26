@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Builder</title>
+</head>
+<body>
+    <h2>Team Builder</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Create Team</button>
+    </form>
+
+    <h3>Available Units</h3>
+    <ul>
+        {% for unit in units %}
+            <li>
+                <img src="{{ unit.image.url }}" alt="{{ unit.name }}" width="100">
+                <strong>{{ unit.name }}</strong>: {{ unit.description }}
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'strategy_planner' %}">Go to Strategy Planner</a>
+</body>
+</html>
